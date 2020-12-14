@@ -1,10 +1,10 @@
 package sources
 
 import (
-	"testing"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"testing"
 )
 
 func TestFlatDirSource_AddFileAs(t *testing.T) {
@@ -34,7 +34,7 @@ func TestFlatDirSource_AddFileAs(t *testing.T) {
 	srcFile.Close()
 
 	ds := &FlatDirSource{
-		Root: srcDir,
+		Root:    srcDir,
 		Linking: NoLink,
 	}
 

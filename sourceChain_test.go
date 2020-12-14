@@ -1,10 +1,10 @@
 package recon
 
 import (
-	"testing"
-	"os"
 	"io/ioutil"
+	"os"
 	"path/filepath"
+	"testing"
 )
 
 func TestSourceChain_AddFileAs(t *testing.T) {

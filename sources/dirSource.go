@@ -1,21 +1,21 @@
 package sources
 
 import (
+	"errors"
+	"github.com/raphaelreyna/recon"
+	"io"
 	"os"
 	"path/filepath"
-	"io"
-	"github.com/raphaelreyna/recon"
-	"errors"
 	"sync"
 )
 
 const DirSrc recon.SourceName = "dir_source"
 
 type DirSource struct {
-	Root string `json:"root" bson:"root" yaml:"root"`
+	Root    string      `json:"root" bson:"root" yaml:"root"`
 	Linking LinkingType `json:"linking" bson:"linking" yaml;"linking"`
 
-	cache map[string]string `json:"-" bson:"-" yaml:"-"`
+	cache      map[string]string `json:"-" bson:"-" yaml:"-"`
 	sync.Mutex `json:"-" bson:"-" yaml:"-"`
 }
 
@@ -71,12 +71,11 @@ func (ds *DirSource) AddFileAs(name, destination string, perm os.FileMode) bool 
 	var linkFunc func(string, string) error
 	switch ds.Linking {
 	case NoLink:
-		nf, err := os.OpenFile(destination, os.O_CREATE | os.O_WRONLY, perm)
+		nf, err := os.OpenFile(destination, os.O_CREATE|os.O_WRONLY, perm)
 		if err != nil {
 			return false
 		}
 		defer nf.Close()
-
 
 		sf, err := os.Open(srcFile)
 		if err != nil {
@@ -99,7 +98,7 @@ func NewDirSourceChain(linking LinkingType, dirs ...string) recon.SourceChain {
 	sc := recon.SourceChain{}
 	for _, dir := range dirs {
 		sc = append(sc, &DirSource{
-			Root: dir,
+			Root:    dir,
 			Linking: linking,
 		})
 	}

@@ -1,10 +1,10 @@
 package sources
 
 import (
-	"testing"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"testing"
 )
 
 func TestHTTPSource_AddFileAs(t *testing.T) {

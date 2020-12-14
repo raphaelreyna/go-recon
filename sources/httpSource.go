@@ -1,11 +1,11 @@
 package sources
 
 import (
-	"os"
+	"github.com/raphaelreyna/recon"
 	"io"
 	"net/http"
 	"net/url"
-	"github.com/raphaelreyna/recon"
+	"os"
 )
 
 const HTTPSrc recon.SourceName = "http_source"
@@ -23,7 +23,7 @@ func isValidURL(s string) bool {
 
 func (hs *HTTPSource) AddFileAs(name, destination string, perm os.FileMode) bool {
 	rollback := true
-	nf, err := os.OpenFile(destination, os.O_CREATE | os.O_WRONLY, perm)
+	nf, err := os.OpenFile(destination, os.O_CREATE|os.O_WRONLY, perm)
 	if err != nil {
 		return false
 	}

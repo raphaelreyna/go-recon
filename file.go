@@ -6,10 +6,10 @@ import (
 )
 
 type File struct {
-	Name string `json:"name" bson:"name" yaml:"name"`
-	Location string `json:"location" bson:"location" yaml:"location"` // optional
+	Name        string      `json:"name" bson:"name" yaml:"name"`
+	Location    string      `json:"location" bson:"location" yaml:"location"` // optional
 	SourceChain SourceChain `json:"-"`
-	Perm os.FileMode `json:"perm" bson:"perm" yaml:"perm"`
+	Perm        os.FileMode `json:"perm" bson:"perm" yaml:"perm"`
 }
 
 func (f *File) AddTo(dir string, perm int, sc SourceChain) error {

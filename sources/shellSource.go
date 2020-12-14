@@ -1,21 +1,21 @@
 package sources
 
 import (
-	"os/exec"
-	"os"
 	"github.com/raphaelreyna/recon"
+	"os"
+	"os/exec"
 )
 
 const ShellSrc recon.SourceName = "shell_source"
 
 type ShellSource struct {
 	WorkingDir string
-	Shell string
+	Shell      string
 }
 
 func (ss *ShellSource) AddFileAs(name, destination string, perm os.FileMode) bool {
 	cmd := exec.Command(ss.Shell, "-c", name)
-	file, err := os.OpenFile(destination, os.O_CREATE | os.O_RDWR, perm)
+	file, err := os.OpenFile(destination, os.O_CREATE|os.O_RDWR, perm)
 	if err != nil {
 		return false
 	}

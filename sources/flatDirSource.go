@@ -1,10 +1,10 @@
 package sources
 
 import (
+	"github.com/raphaelreyna/recon"
+	"io"
 	"os"
 	"path/filepath"
-	"io"
-	"github.com/raphaelreyna/recon"
 )
 
 type LinkingType uint
@@ -18,7 +18,7 @@ const (
 const FlatDirSrc recon.SourceName = "flat_dir_source"
 
 type FlatDirSource struct {
-	Root string `json:"root" bson:"root" yaml:"root"`
+	Root    string      `json:"root" bson:"root" yaml:"root"`
 	Linking LinkingType `json:"linking" bson:"linking" yaml;"linking"`
 }
 
@@ -28,12 +28,11 @@ func (ds *FlatDirSource) AddFileAs(name, destination string, perm os.FileMode) b
 	var linkFunc func(string, string) error
 	switch ds.Linking {
 	case NoLink:
-		nf, err := os.OpenFile(destination, os.O_CREATE | os.O_WRONLY, perm)
+		nf, err := os.OpenFile(destination, os.O_CREATE|os.O_WRONLY, perm)
 		if err != nil {
 			return false
 		}
 		defer nf.Close()
-
 
 		sf, err := os.Open(srcFile)
 		if err != nil {
@@ -56,7 +55,7 @@ func NewFlatDirSourceChain(linking LinkingType, dirs ...string) recon.SourceChai
 	sc := recon.SourceChain{}
 	for _, dir := range dirs {
 		sc = append(sc, &FlatDirSource{
-			Root: dir,
+			Root:    dir,
 			Linking: linking,
 		})
 	}

@@ -5,10 +5,10 @@ import (
 )
 
 type Dir struct {
-	Root string
-	Files []*File
+	Root        string
+	Files       []*File
 	SourceChain SourceChain
-	FilesPerm os.FileMode
+	FilesPerm   os.FileMode
 }
 
 func NewDir(root string, sc SourceChain, files ...string) *Dir {
@@ -20,10 +20,10 @@ func NewDir(root string, sc SourceChain, files ...string) *Dir {
 	}
 
 	return &Dir{
-		Root: root,
-		Files: ff,
+		Root:        root,
+		Files:       ff,
 		SourceChain: sc,
-		FilesPerm: 0644,
+		FilesPerm:   0644,
 	}
 }
 
@@ -39,7 +39,6 @@ func (d *Dir) MissingFiles() ([]*File, error) {
 	if err != nil {
 		return nil, err
 	}
-
 
 	// for each file we want, loop through the current file names we have and look for matches
 	missing := []*File{}
@@ -60,7 +59,6 @@ func (d *Dir) MissingFiles() ([]*File, error) {
 
 	return missing, nil
 }
-
 
 func (d *Dir) Reconcile() error {
 	mf, err := d.MissingFiles()

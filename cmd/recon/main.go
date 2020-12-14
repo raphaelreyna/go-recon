@@ -1,17 +1,17 @@
 package main
 
 import (
-	"os"
-	"github.com/raphaelreyna/recon/sources"
 	"github.com/raphaelreyna/recon"
-        yaml "gopkg.in/yaml.v2"
+	"github.com/raphaelreyna/recon/sources"
+	yaml "gopkg.in/yaml.v2"
 	"io/ioutil"
+	"os"
 	"path/filepath"
 )
 
 type reconFile struct {
-	Files []*recon.File `json:"files" bson:"files" yaml:"files"`
-	SourceDirs []string `json:"dirs" bson:"dirs" yaml:"dirs"`
+	Files      []*recon.File `json:"files" bson:"files" yaml:"files"`
+	SourceDirs []string      `json:"dirs" bson:"dirs" yaml:"dirs"`
 }
 
 func main() {
@@ -31,17 +31,17 @@ func main() {
 	}
 
 	d := &recon.Dir{
-		Root: here,
-		Files: rf.Files,
+		Root:        here,
+		Files:       rf.Files,
 		SourceChain: sources.NewDirSourceChain(sources.SoftLink, rf.SourceDirs...),
-		FilesPerm: 0644,
+		FilesPerm:   0644,
 	}
 
 	d.SourceChain = append(d.SourceChain,
 		&sources.HTTPSource{},
 		&sources.ShellSource{
 			WorkingDir: here,
-			Shell: "/bin/bash",
+			Shell:      "/bin/bash",
 		},
 	)
 

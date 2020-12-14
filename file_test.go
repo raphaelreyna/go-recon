@@ -1,10 +1,10 @@
 package recon
 
 import (
-	"testing"
-	"os"
 	"io/ioutil"
+	"os"
 	"path/filepath"
+	"testing"
 )
 
 type testSource map[string][]byte
@@ -22,7 +22,7 @@ var ts2 testSource = map[string][]byte{
 }
 
 func (ts *testSource) AddFileAs(name, destination string, perm os.FileMode) bool {
-	file, err := os.OpenFile(destination, os.O_CREATE | os.O_WRONLY, perm)
+	file, err := os.OpenFile(destination, os.O_CREATE|os.O_WRONLY, perm)
 	if err != nil {
 		return false
 	}
@@ -73,7 +73,7 @@ func TestFile_String(t *testing.T) {
 		t.Fatalf("got wrong file string:\n\texpected: %s\n\treceived: %s\n", expected, f1.String())
 	}
 
-	if expected := f2.Name + "@" + f2.Location; f2.String() != expected  {
+	if expected := f2.Name + "@" + f2.Location; f2.String() != expected {
 		t.Fatalf("got wrong file string:\n\texpected: %s\n\treceived: %s\n", expected, f2.String())
 	}
 }

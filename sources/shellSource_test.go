@@ -1,10 +1,10 @@
 package sources
 
 import (
-	"testing"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"testing"
 )
 
 func TestShellDirSource_AddFileAs(t *testing.T) {
@@ -20,7 +20,7 @@ func TestShellDirSource_AddFileAs(t *testing.T) {
 
 	ds := &ShellSource{
 		WorkingDir: root,
-		Shell: "/bin/bash",
+		Shell:      "/bin/bash",
 	}
 
 	if found := ds.AddFileAs("echo pass", filepath.Join(root, "pass.txt"), 0644); !found {

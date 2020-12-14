@@ -1,11 +1,11 @@
 package recon
 
 import (
-	"testing"
-	"os"
-	"io/ioutil"
-	"path/filepath"
 	"bytes"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+	"testing"
 )
 
 func TestDir_MissingFiles(t *testing.T) {
@@ -33,10 +33,10 @@ func TestDir_MissingFiles(t *testing.T) {
 
 	d := &Dir{Root: root}
 	d.Files = []*File{
-		&File{Name: "a.txt"},
-		&File{Name: "b.txt"},
-		&File{Name: "c.txt"},
-		&File{Name: "d.txt"},
+		{Name: "a.txt"},
+		{Name: "b.txt"},
+		{Name: "c.txt"},
+		{Name: "d.txt"},
 	}
 
 	mf, err := d.MissingFiles()
@@ -81,10 +81,10 @@ func TestDir_ReconcileFiles(t *testing.T) {
 
 	d := &Dir{Root: root}
 	d.Files = []*File{
-		&File{Name: "a.txt"},
-		&File{Name: "b.txt"},
-		&File{Name: "c.txt"},
-		&File{Name: "1.txt"},
+		{Name: "a.txt"},
+		{Name: "b.txt"},
+		{Name: "c.txt"},
+		{Name: "1.txt"},
 	}
 	d.SourceChain = SourceChain{
 		&ts1, &ts2,

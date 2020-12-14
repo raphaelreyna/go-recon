@@ -2,8 +2,8 @@ package recon
 
 import (
 	"errors"
-	"os"
 	"fmt"
+	"os"
 )
 
 type Error struct {
@@ -19,10 +19,7 @@ func (e *Error) Unwrap() error {
 	return e.err
 }
 
-
-
 type SourceName string
-
 
 type Source interface {
 	// AddFileAs makes the file named name available at destination.
