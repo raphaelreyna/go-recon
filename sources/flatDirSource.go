@@ -52,7 +52,7 @@ func (ds *FlatDirSource) AddFileAs(name, destination string, perm os.FileMode) b
 	return linkFunc(srcFile, destination) == nil
 }
 
-func NewDirSourceChain(linking LinkingType, dirs ...string) recon.SourceChain {
+func NewFlatDirSourceChain(linking LinkingType, dirs ...string) recon.SourceChain {
 	sc := recon.SourceChain{}
 	for _, dir := range dirs {
 		sc = append(sc, &FlatDirSource{

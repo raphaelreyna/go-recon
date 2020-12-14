@@ -33,7 +33,7 @@ func main() {
 	d := &recon.Dir{
 		Root: here,
 		Files: rf.Files,
-		SourceChain: sources.NewRecDirSourceChain(sources.SoftLink, rf.SourceDirs...),
+		SourceChain: sources.NewDirSourceChain(sources.SoftLink, rf.SourceDirs...),
 		FilesPerm: 0644,
 	}
 

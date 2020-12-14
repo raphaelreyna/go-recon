@@ -85,7 +85,7 @@ func (ds *DirSource) AddFileAs(name, destination string, perm os.FileMode) bool 
 		defer sf.Close()
 
 		_, err = io.Copy(nf, sf)
-		return false
+		return err == nil
 	case HardLink:
 		linkFunc = os.Link
 	case SoftLink:
@@ -95,7 +95,7 @@ func (ds *DirSource) AddFileAs(name, destination string, perm os.FileMode) bool 
 	return linkFunc(srcFile, destination) == nil
 }
 
-func NewRecDirSourceChain(linking LinkingType, dirs ...string) recon.SourceChain {
+func NewDirSourceChain(linking LinkingType, dirs ...string) recon.SourceChain {
 	sc := recon.SourceChain{}
 	for _, dir := range dirs {
 		sc = append(sc, &DirSource{

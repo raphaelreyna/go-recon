@@ -30,6 +30,7 @@ func (ss *ShellSource) AddFileAs(name, destination string, perm os.FileMode) boo
 
 	cmd.Stdout = file
 	cmd.Stderr = file
+	cmd.Dir = ss.WorkingDir
 
 	if err := cmd.Run(); err != nil {
 		return false
