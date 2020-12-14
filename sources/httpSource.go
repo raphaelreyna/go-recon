@@ -5,10 +5,13 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"github.com/raphaelreyna/recon"
 )
 
+const HTTPSrc recon.SourceName = "http_source"
+
 type HTTPSource struct {
-	Client *http.Client
+	Client *http.Client `json:"=" bson:"-" yaml:"-"`
 }
 
 func isValidURL(s string) bool {
@@ -45,10 +48,9 @@ func (hs *HTTPSource) AddFileAs(name, destination string, perm os.FileMode) bool
 		return false
 	}
 	defer resp.Body.Close()
-	r := io.TeeReader(resp.Body, os.Stdout)
 
-	_, err = io.Copy(nf, r)
-	if err != nil {
+	_, err = io.Copy(nf, resp.Body)
+	if err == nil {
 		rollback = false
 	}
 

@@ -21,6 +21,8 @@ func (e *Error) Unwrap() error {
 
 
 
+type SourceName string
+
 
 type Source interface {
 	// AddFileAs makes the file named name available at destination.

@@ -15,9 +15,11 @@ const (
 	SoftLink
 )
 
+const FlatDirSrc recon.SourceName = "flat_dir_source"
+
 type FlatDirSource struct {
-	Root string
-	Linking LinkingType
+	Root string `json:"root" bson:"root" yaml:"root"`
+	Linking LinkingType `json:"linking" bson:"linking" yaml;"linking"`
 }
 
 func (ds *FlatDirSource) AddFileAs(name, destination string, perm os.FileMode) bool {

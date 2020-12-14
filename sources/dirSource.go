@@ -9,22 +9,22 @@ import (
 	"sync"
 )
 
-type DirSource struct {
-	Root string
-	Linking LinkingType
+const DirSrc recon.SourceName = "dir_source"
 
-	cache map[string]string
-	sync.Mutex
+type DirSource struct {
+	Root string `json:"root" bson:"root" yaml:"root"`
+	Linking LinkingType `json:"linking" bson:"linking" yaml;"linking"`
+
+	cache map[string]string `json:"-" bson:"-" yaml:"-"`
+	sync.Mutex `json:"-" bson:"-" yaml:"-"`
 }
 
 var DoneWalking error = errors.New("done walking")
 
 func (ds *DirSource) findFile(name string) (bool, error) {
-	ds.Lock()
 	if ds.cache == nil {
 		ds.cache = map[string]string{}
 	}
-	ds.Unlock()
 
 	var found bool
 	err := filepath.Walk(ds.Root, filepath.WalkFunc(func(n string, info os.FileInfo, err error) error {
@@ -37,9 +37,7 @@ func (ds *DirSource) findFile(name string) (bool, error) {
 
 		if filepath.Base(name) == filepath.Base(n) {
 			found = true
-			ds.Lock()
 			ds.cache[name] = n
-			ds.Unlock()
 			return DoneWalking
 		}
 
@@ -58,11 +56,13 @@ func (ds *DirSource) AddFileAs(name, destination string, perm os.FileMode) bool 
 	if !exists {
 		found, err := ds.findFile(name)
 		if err != nil {
+			ds.Unlock()
 			return false
 		}
 		if found {
 			srcFile = ds.cache[name]
 		} else {
+			ds.Unlock()
 			return false
 		}
 	}

@@ -37,7 +37,13 @@ func main() {
 		FilesPerm: 0644,
 	}
 
-	d.SourceChain = append(d.SourceChain, &sources.HTTPSource{})
+	d.SourceChain = append(d.SourceChain,
+		&sources.HTTPSource{},
+		&sources.ShellSource{
+			WorkingDir: here,
+			Shell: "/bin/bash",
+		},
+	)
 
 	if err := d.Reconcile(); err != nil {
 		panic(err)
