@@ -5,9 +5,9 @@ File data is pulled from a chain of plugin-defined sources so you can grab your 
 
 
 ## Example
-When run, the following snippet of Go code will search for files named `a.txt` and `b.txt` in directorires `/foo` and `/bar/baz` and soft-link them into `/home/recon`.
+When run, the following snippet of Go code will search for files named `a.txt` and `b.txt` in directories `/foo` and `/bar/baz` and soft-link them into `/home/recon`.
 
-```
+```Go
 package main
 
 import (
