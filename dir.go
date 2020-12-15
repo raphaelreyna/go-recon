@@ -4,6 +4,8 @@ import (
 	"os"
 )
 
+// Dir manages the directory at Root by reconciling its contents with Files.
+// Missing files will be searched for in the sources listed in the SourceChain
 type Dir struct {
 	Root        string
 	Files       []*File
@@ -11,6 +13,7 @@ type Dir struct {
 	FilesPerm   os.FileMode
 }
 
+// NewDir is a helper function for creating a partially configured Dir struct.
 func NewDir(root string, sc SourceChain, files ...string) *Dir {
 	ff := []*File{}
 	for _, f := range files {
@@ -27,6 +30,7 @@ func NewDir(root string, sc SourceChain, files ...string) *Dir {
 	}
 }
 
+// MissingFiles returns the Files that are missing from this Dir structs Root directory.
 func (d *Dir) MissingFiles() ([]*File, error) {
 	// Grab the names of the files currently in the directory
 	root, err := os.Open(d.Root)
@@ -60,6 +64,7 @@ func (d *Dir) MissingFiles() ([]*File, error) {
 	return missing, nil
 }
 
+// Reconcile adds the missing files to this Dir structs Root directory.
 func (d *Dir) Reconcile() error {
 	mf, err := d.MissingFiles()
 	if err != nil {

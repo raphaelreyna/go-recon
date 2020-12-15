@@ -5,13 +5,19 @@ import (
 	"path/filepath"
 )
 
+// File represents a file that can may be obtained from a Source in the SourceChain.
 type File struct {
-	Name        string      `json:"name" bson:"name" yaml:"name"`
-	Location    string      `json:"location" bson:"location" yaml:"location"` // optional
+	// Name is the name of the file in the managed directory.
+	Name string `json:"name" bson:"name" yaml:"name"`
+	// Location is the location of the file, whatever that may mean to each Source.
+	Location string `json:"location" bson:"location" yaml:"location"` // optional
+	// SourceChain is a list of Sources which will be queried for the file.
 	SourceChain SourceChain `json:"-"`
-	Perm        os.FileMode `json:"perm" bson:"perm" yaml:"perm"`
+	// Perm is the permissions this file should have in the managed directory.
+	Perm os.FileMode `json:"perm" bson:"perm" yaml:"perm"`
 }
 
+// AddTo searches through sc SourceChain for the file and adds it to the directory with the given permissions perm.
 func (f *File) AddTo(dir string, perm int, sc SourceChain) error {
 	ssc := sc
 	if f.SourceChain != nil {
