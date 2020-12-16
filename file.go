@@ -18,7 +18,7 @@ type File struct {
 }
 
 // AddTo searches through sc SourceChain for the file and adds it to the directory with the given permissions perm.
-func (f *File) AddTo(dir string, perm int, sc SourceChain) error {
+func (f *File) AddTo(dir string, perm int, sc SourceChain) (SourceErrs, error) {
 	ssc := sc
 	if f.SourceChain != nil {
 		ssc = f.SourceChain

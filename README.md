@@ -28,8 +28,8 @@ func main() {
 		FilesPerm: 0644,
 	}
 
-	if err := d.Reconcile(); err != nil {
-		panic(err)
+	if errs := d.Reconcile(); len(errs) != 0 {
+		panic(errs)
 	}
 }
 ```

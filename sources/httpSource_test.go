@@ -20,8 +20,8 @@ func TestHTTPSource_AddFileAs(t *testing.T) {
 
 	ds := &HTTPSource{}
 
-	if found := ds.AddFileAs("https://golang.org/doc/gopher/project.png", filepath.Join(root, "photo.png"), 0644); !found {
-		t.Fatal("could not find file in source dir")
+	if err := ds.AddFileAs("https://golang.org/doc/gopher/project.png", filepath.Join(root, "photo.png"), 0644); err != nil {
+		t.Fatal(err)
 	}
 
 	// Make sure the file was placed into the root folder

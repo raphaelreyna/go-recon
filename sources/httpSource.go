@@ -1,11 +1,12 @@
 package sources
 
 import (
-	"github.com/raphaelreyna/recon"
 	"io"
 	"net/http"
 	"net/url"
 	"os"
+
+	"github.com/raphaelreyna/recon"
 )
 
 const HTTPSrc recon.SourceName = "http_source"
@@ -21,11 +22,11 @@ func isValidURL(s string) bool {
 	return valid
 }
 
-func (hs *HTTPSource) AddFileAs(name, destination string, perm os.FileMode) bool {
+func (hs *HTTPSource) AddFileAs(name, destination string, perm os.FileMode) error {
 	rollback := true
 	nf, err := os.OpenFile(destination, os.O_CREATE|os.O_WRONLY, perm)
 	if err != nil {
-		return false
+		return err
 	}
 	defer func() {
 		nf.Close()
@@ -41,11 +42,11 @@ func (hs *HTTPSource) AddFileAs(name, destination string, perm os.FileMode) bool
 
 	resp, err := client.Get(name)
 	if err != nil {
-		return false
+		return err
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return false
+		return err
 	}
 	defer resp.Body.Close()
 
@@ -54,5 +55,5 @@ func (hs *HTTPSource) AddFileAs(name, destination string, perm os.FileMode) bool
 		rollback = false
 	}
 
-	return err == nil
+	return err
 }

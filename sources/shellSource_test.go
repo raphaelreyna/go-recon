@@ -23,8 +23,8 @@ func TestShellDirSource_AddFileAs(t *testing.T) {
 		Shell:      "/bin/bash",
 	}
 
-	if found := ds.AddFileAs("echo pass", filepath.Join(root, "pass.txt"), 0644); !found {
-		t.Fatal("could not find file in source dir")
+	if err := ds.AddFileAs("echo pass", filepath.Join(root, "pass.txt"), 0644); err != nil {
+		t.Fatal(err)
 	}
 
 	// Make sure the file was placed into the root folder

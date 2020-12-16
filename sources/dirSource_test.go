@@ -38,8 +38,8 @@ func TestDirSource_AddFileAs(t *testing.T) {
 		Linking: NoLink,
 	}
 
-	if found := ds.AddFileAs("test.txt", filepath.Join(root, "pass.txt"), 0644); !found {
-		t.Fatal("could not find file in source dir")
+	if err := ds.AddFileAs("test.txt", filepath.Join(root, "pass.txt"), 0644); err != nil {
+		t.Fatal(err)
 	}
 
 	// Make sure the file was placed into the root folder

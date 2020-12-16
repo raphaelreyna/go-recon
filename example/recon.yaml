@@ -1,0 +1,26 @@
+# This is a config file for the example program for the Go package recon (https://github.com/raphaelreyna/go-recon)
+#
+# If the example program is run and finds this file (recon.yaml) in its current directory,
+# then it tries to add all of the files listed in the files section below to its current directory.
+#
+# The files listed in the files section will be searched for by name (or location if given):
+# 1 - in the directories listed in the source_dirs section below,
+# 2 - as a url,
+# 3 - as a shell script.
+files:
+  # List the files you want to be added to this directory in this section.
+  # Files will be searched for by name and be placed into this directory with the name name.
+  # If a location (optional) is provided, the file will instead be searched for by location rather than by name.
+  - name:
+      foo.txt
+  - name:
+      root_contents.txt
+    location:
+      "ls /"
+  - name:
+      gopher.png
+    location:
+      https://golang.org/doc/gopher/project.png"
+source_dirs:
+  # List the directories that should be included in the search for files, in order.
+  - "/bar/baz"

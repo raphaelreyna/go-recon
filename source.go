@@ -27,8 +27,7 @@ type SourceName string
 type Source interface {
 	// AddFileAs makes the file named name available at destination.
 	// The argument destination is NOT a directory name, it is the full path to a file.
-	// The returned boolean is true if the file with the name 'name' was found and could be written to destination
-	AddFileAs(name, destination string, perm os.FileMode) bool
+	AddFileAs(name, destination string, perm os.FileMode) error
 }
 
 // ErrNoSource is raised when no source in a source chain contains a requested file.
@@ -38,13 +37,25 @@ var ErrNoSource error = errors.New("no source found")
 // A SourceChain searches for files starting with the first Source and moving down the list if the file is not found.
 type SourceChain []Source
 
+// SourceErrs maps a source to the error it returned
+type SourceErrs map[Source]error
+
 // AddFileAs searches the SourceChain for the first Source that can create a file with the name name at the path destination.
-func (sc SourceChain) AddFileAs(name, destination string, perm os.FileMode) error {
+func (sc SourceChain) AddFileAs(name, destination string, perm os.FileMode) (SourceErrs, error) {
+	se := SourceErrs{}
+	success := false
 	for _, s := range sc {
-		if s.AddFileAs(name, destination, perm) {
-			return nil
+		if err := s.AddFileAs(name, destination, perm); err != nil {
+			se[s] = err
+		} else {
+			success = true
+			break
 		}
 	}
 
-	return &Error{"error searching for" + name, ErrNoSource}
+	if success {
+		return se, nil
+	}
+
+	return se, &Error{"error searching for" + name, ErrNoSource}
 }

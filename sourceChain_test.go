@@ -21,7 +21,7 @@ func TestSourceChain_AddFileAs(t *testing.T) {
 	sc := SourceChain{&ts1, &ts2}
 	dst := filepath.Join(root, "a.txt")
 
-	if err := sc.AddFileAs("a.txt", dst, 0644); err != nil {
+	if _, err := sc.AddFileAs("a.txt", dst, 0644); err != nil {
 		t.Fatal(err)
 	}
 

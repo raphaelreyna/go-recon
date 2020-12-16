@@ -2,11 +2,12 @@ package sources
 
 import (
 	"errors"
-	"github.com/raphaelreyna/recon"
 	"io"
 	"os"
 	"path/filepath"
 	"sync"
+
+	"github.com/raphaelreyna/recon"
 )
 
 const DirSrc recon.SourceName = "dir_source"
@@ -50,20 +51,20 @@ func (ds *DirSource) findFile(name string) (bool, error) {
 	return found, nil
 }
 
-func (ds *DirSource) AddFileAs(name, destination string, perm os.FileMode) bool {
+func (ds *DirSource) AddFileAs(name, destination string, perm os.FileMode) error {
 	ds.Lock()
 	srcFile, exists := ds.cache[name]
 	if !exists {
 		found, err := ds.findFile(name)
 		if err != nil {
 			ds.Unlock()
-			return false
+			return err
 		}
 		if found {
 			srcFile = ds.cache[name]
 		} else {
 			ds.Unlock()
-			return false
+			return err
 		}
 	}
 	ds.Unlock()
@@ -73,25 +74,25 @@ func (ds *DirSource) AddFileAs(name, destination string, perm os.FileMode) bool 
 	case NoLink:
 		nf, err := os.OpenFile(destination, os.O_CREATE|os.O_WRONLY, perm)
 		if err != nil {
-			return false
+			return err
 		}
 		defer nf.Close()
 
 		sf, err := os.Open(srcFile)
 		if err != nil {
-			return false
+			return err
 		}
 		defer sf.Close()
 
 		_, err = io.Copy(nf, sf)
-		return err == nil
+		return err
 	case HardLink:
 		linkFunc = os.Link
 	case SoftLink:
 		linkFunc = os.Symlink
 	}
 
-	return linkFunc(srcFile, destination) == nil
+	return linkFunc(srcFile, destination)
 }
 
 func NewDirSourceChain(linking LinkingType, dirs ...string) recon.SourceChain {

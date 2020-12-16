@@ -1,6 +1,7 @@
 package recon
 
 import (
+	"errors"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -21,21 +22,21 @@ var ts2 testSource = map[string][]byte{
 	"3.txt": []byte("file 3"),
 }
 
-func (ts *testSource) AddFileAs(name, destination string, perm os.FileMode) bool {
+func (ts *testSource) AddFileAs(name, destination string, perm os.FileMode) error {
 	file, err := os.OpenFile(destination, os.O_CREATE|os.O_WRONLY, perm)
 	if err != nil {
-		return false
+		return err
 	}
 	defer file.Close()
 
 	data, exists := (*ts)[name]
 	if !exists {
-		return false
+		return errors.New("file not found")
 	}
 
 	_, err = file.Write(data)
 
-	return err == nil
+	return err
 }
 
 func TestFile_AddTo(t *testing.T) {
@@ -56,7 +57,7 @@ func TestFile_AddTo(t *testing.T) {
 		},
 	}
 
-	if err := f.AddTo(root, 0644, nil); err != nil {
+	if _, err := f.AddTo(root, 0644, nil); err != nil {
 		t.Fatal(err)
 	}
 
