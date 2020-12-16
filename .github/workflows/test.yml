@@ -15,6 +15,9 @@ jobs:
 
     - name: Checkout code
       uses: actions/checkout@v2
+    
+    - name: Run tests
+      run: go test -json ./... > test.json
 
     - name: Golang Test Annotations
       # You may pin to the exact commit or the version.
