@@ -1,6 +1,6 @@
 package sources
 
-import "github.com/raphaelreyna/recon"
+import "github.com/raphaelreyna/go-recon"
 
 var DefaultSources []recon.SourceName = []recon.SourceName{
 	DirSrc,

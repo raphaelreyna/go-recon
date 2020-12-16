@@ -4,7 +4,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/raphaelreyna/recon"
+	"github.com/raphaelreyna/go-recon"
 )
 
 const ShellSrc recon.SourceName = "shell_source"

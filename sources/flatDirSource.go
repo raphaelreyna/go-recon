@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/raphaelreyna/recon"
+	"github.com/raphaelreyna/go-recon"
 )
 
 type LinkingType uint

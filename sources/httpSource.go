@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"os"
 
-	"github.com/raphaelreyna/recon"
+	"github.com/raphaelreyna/go-recon"
 )
 
 const HTTPSrc recon.SourceName = "http_source"

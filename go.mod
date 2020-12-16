@@ -1,4 +1,4 @@
-module github.com/raphaelreyna/recon
+module github.com/raphaelreyna/go-recon
 
 go 1.14
 

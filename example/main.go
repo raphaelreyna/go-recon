@@ -5,8 +5,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/raphaelreyna/recon"
-	"github.com/raphaelreyna/recon/sources"
+	"github.com/raphaelreyna/go-recon"
+	"github.com/raphaelreyna/go-recon/sources"
 	yaml "gopkg.in/yaml.v2"
 )
 

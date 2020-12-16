@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"sync"
 
-	"github.com/raphaelreyna/recon"
+	"github.com/raphaelreyna/go-recon"
 )
 
 const DirSrc recon.SourceName = "dir_source"
