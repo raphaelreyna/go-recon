@@ -1,3 +1,5 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/raphaelreyna/go-recon)](https://goreportcard.com/report/github.com/raphaelreyna/go-recon) [![](https://godoc.org/github.com/raphaelreyna/go-recon?status.svg)](http://godoc.org/github.com/raphaelreyna/go-recon)
+
 # Go-Recon
 
 A Go package for robustly reconciling directory contents with a list of files.
