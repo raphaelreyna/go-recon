@@ -14,7 +14,7 @@ const DirSrc recon.SourceName = "dir_source"
 
 type DirSource struct {
 	Root    string      `json:"root" bson:"root" yaml:"root"`
-	Linking LinkingType `json:"linking" bson:"linking" yaml;"linking"`
+	Linking LinkingType `json:"linking" bson:"linking" yaml:"linking"`
 
 	cache      map[string]string `json:"-" bson:"-" yaml:"-"`
 	sync.Mutex `json:"-" bson:"-" yaml:"-"`
