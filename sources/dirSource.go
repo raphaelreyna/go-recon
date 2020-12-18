@@ -64,7 +64,7 @@ func (ds *DirSource) AddFileAs(name, destination string, perm os.FileMode) error
 			srcFile = ds.cache[name]
 		} else {
 			ds.Unlock()
-			return err
+			return os.ErrNotExist
 		}
 	}
 	ds.Unlock()
