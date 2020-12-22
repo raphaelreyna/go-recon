@@ -57,5 +57,5 @@ func (sc SourceChain) AddFileAs(name, destination string, perm os.FileMode) (Sou
 		return se, nil
 	}
 
-	return se, &Error{"error searching for" + name, ErrNoSource}
+	return se, &Error{"error searching for " + name, ErrNoSource}
 }
