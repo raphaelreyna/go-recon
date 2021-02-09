@@ -69,6 +69,12 @@ func (ds *DirSource) AddFileAs(name, destination string, perm os.FileMode) error
 	}
 	ds.Unlock()
 
+	// Make sure the destinations directory exists
+	dir := filepath.Dir(destination)
+	if err := os.MkdirAll(dir, 0700); err != nil {
+		return err
+	}
+
 	var linkFunc func(string, string) error
 	switch ds.Linking {
 	case NoLink:
